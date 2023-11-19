@@ -1,6 +1,5 @@
 """
-Made by: CodeWhisperer: Be the code whisperer you were always meant to be
-                  Anno Domini 2023
+        Enigma: CodeWhisperer // Unveil the coder within. // Anno Domini MMXXIII.
 
 
 This script can be used to generate SIP devices for Cisco IOS XE router.

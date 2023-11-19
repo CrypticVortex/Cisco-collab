@@ -1,6 +1,5 @@
 """
-Made by: CodeWhisperer: Be the code whisperer you were always meant to be
-                  Anno Domini 2023
+        Enigma: CodeWhisperer // Unveil the coder within. // Anno Domini MMXXIII.
 
 
 In Cisco IOS XE router, which working as SIP gateway or similar.
