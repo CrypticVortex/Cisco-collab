@@ -3,11 +3,11 @@
 This script can be used to generate SIP devices for Cisco IOS XE router.
 This script has GUI for better usage.
 
-   You need a CSV file containing the following columns:
-            * phone_number
-            * display_name
-            * mac_address
-            * phone_type
+   You need a CSV file containing the following columns:<br />
+            * phone_number<br />
+            * display_name<br />
+            * mac_address<br />
+            * phone_type<br /><br />
       example file is included in library.
 
 # Usage
