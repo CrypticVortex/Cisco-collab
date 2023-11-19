@@ -11,6 +11,11 @@ This script has GUI for better usage.
       example file is included in library.
 
 # Usage
+To use the program: <br /><br />
+   Install the required Python dependecies:<br /><br />
+   Python 3.8 or later <br />
+   PIP<br />
+
 ## GUI
 Simple GUI, where you can browse for the path to a CSV file and enter the conf file name. The script adds the .cfg extension to the file and saves it to C:\Users&lt;username>\Documents\Python\Scripts.
 
