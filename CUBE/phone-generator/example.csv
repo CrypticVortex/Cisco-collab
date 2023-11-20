@@ -1,0 +1,3 @@
+phone_number,display_name,mac_address,phone_type
+123456,conf_test example 1,10:10:10:10:10,1234
+123457,conf_test example 2,10:10:10:10:11,1235
