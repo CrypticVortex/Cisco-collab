@@ -11,8 +11,6 @@ This script has GUI for better usage.
         example file included in library
 
 
-CodeWhisperer: Be the code whisperer you were always meant to be.
-                Anno Domini 2023
     """
 
 import os
