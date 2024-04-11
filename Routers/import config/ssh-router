@@ -1,0 +1,52 @@
+
+#!/usr/bin/env python3
+
+import paramiko
+import getpass
+from cryptography.fernet import Fernet
+
+# Generate a key for encryption
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
+
+def encrypt_password(password):
+    return cipher_suite.encrypt(password.encode('utf-8'))
+
+def ssh_to_router(hostname, username, password, config_file_path):
+    try:
+        # Create an SSH client instance
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the router
+        client.connect(hostname, username=username, password=password)
+
+        # Open the configuration file
+        with open(config_file_path, 'r') as config_file:
+            commands = config_file.readlines()
+
+        # Execute each command in the configuration file
+        for command in commands:
+            stdin, stdout, stderr = client.exec_command(command)
+            print(stdout.read().decode('utf-8'))
+
+        # Close the connection
+        client.close()
+        print(f"Configuration completed on {hostname}.")
+    except Exception as e:
+        print(f"Error configuring the router {hostname}: {str(e)}")
+
+if __name__ == "__main__":
+    router_hostname = input("Enter the router IP address: ")
+    router_username = input("Enter the router username: ")
+    router_password = getpass.getpass("Enter the router password: ")
+
+    # Encrypt the password
+    encrypted_password = encrypt_password(router_password)
+  
+
+    # Path to the configuration file
+    config_file_path = input("Enter the path to the configuration file: ")
+
+    # Execute the configuration
+    ssh_to_router(router_hostname, router_username, router_password, config_file_path)

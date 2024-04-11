@@ -1,0 +1,98 @@
+import serial
+import serial.tools.list_ports
+import time
+import os
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
+
+# Function to list available COM ports
+def list_com_ports():
+    return list(serial.tools.list_ports.comports())
+
+# Function to establish connection with the router
+def connect_to_router(com_port, baud_rate=9600, timeout=1, status_label=None):
+    try:
+        status_label.config(text="Connecting...")
+        return serial.Serial(com_port, baud_rate, timeout=timeout)
+    except serial.SerialException as e:
+        messagebox.showerror("Connection Error", f"Error connecting to {com_port}: {e}")
+        return None
+
+# Function to enter global configuration mode
+def enter_global_config_mode(serial_connection, status_label=None):
+    try:
+        status_label.config(text="Entering Global Configuration Mode...")
+        serial_connection.write(b'enable\n')
+        time.sleep(1)  # Wait for the command to be processed
+        serial_connection.write(b'configure terminal\n')
+        time.sleep(1)  # Wait for the command to be processed
+    except serial.SerialException as e:
+        messagebox.showerror("Communication Error", f"Error communicating with the router: {e}")
+
+# Function to execute configuration commands from a file
+def execute_config_from_file(serial_connection, config_file_path, status_label=None):
+    if not os.path.exists(config_file_path):
+        messagebox.showerror("File Error", f"Configuration file {config_file_path} does not exist.")
+        return
+
+    with open(config_file_path, 'r') as config_file:
+        for line in config_file:
+            try:
+                status_label.config(text="Configuring...")
+                serial_connection.write(line.encode())
+                time.sleep(0.5)  # Wait for the command to be processed
+            except serial.SerialException as e:
+                messagebox.showerror("Communication Error", f"Error sending command: {line}\n{e}")
+                break
+
+# GUI functions
+def select_com_port():
+    available_ports = list_com_ports()
+    if available_ports:
+        com_port = com_entry.get()
+        return com_port
+    else:
+        messagebox.showerror("COM Port Error", "No COM port detected")
+        return None
+
+def select_config_file():
+    config_file_path = filedialog.askopenfilename(title="Select Configuration File",
+                                                  filetypes=(("Text files", "*.txt"), ("All files", "*.*")))
+    return config_file_path
+
+def configure_router(status_label):
+    com_port = select_com_port()
+    if com_port:
+        config_file_path = select_config_file()
+        if config_file_path:
+            router_connection = connect_to_router(com_port, status_label=status_label)
+            if router_connection:
+                enter_global_config_mode(router_connection, status_label=status_label)
+                execute_config_from_file(router_connection, config_file_path, status_label=status_label)
+                router_connection.close()
+                status_label.config(text="Configuration Completed Successfully.")
+                messagebox.showinfo("Success", "Configuration completed successfully.")
+            else:
+                messagebox.showerror("Connection Error", "Failed to connect to the router.")
+
+# Main GUI application
+def main_app():
+    root = tk.Tk()
+    root.title("Router Configuration Tool")
+
+    global com_entry
+    tk.Label(root, text="Enter COM Port:").grid(row=0, column=0)
+    com_entry = tk.Entry(root)
+    com_entry.grid(row=0, column=1)
+
+    # Status label
+    status_label = tk.Label(root, text="")
+    status_label.grid(row=2, columnspan=2)
+
+    tk.Button(root, text="Configure Router", command=lambda: configure_router(status_label)).grid(row=1, columnspan=2)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main_app()
