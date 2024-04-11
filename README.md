@@ -6,4 +6,5 @@ Cisco collaboration scripting is a powerful tool that can help you to save time,
 If you are managing a large or complex deployment, I encourage you to learn more about Cisco collaboration scripting.
 
 # About repository
-Mainly using PyCharm 
+Mainly scripting language is Python
+
