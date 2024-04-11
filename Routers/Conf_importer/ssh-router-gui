@@ -1,3 +1,10 @@
+
+"""
+This script can be used to make 
+ssh connection to router and import basic config from file.
+
+  
+    """
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from cryptography.fernet import Fernet

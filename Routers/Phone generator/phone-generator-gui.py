@@ -1,7 +1,4 @@
 """
-        Enigma: CodeWhisperer // Unveil the coder within. // Anno Domini MMXXIII.
-
-
 This script can be used to generate SIP devices for Cisco IOS XE router.
 This script has GUI for better usage.
 

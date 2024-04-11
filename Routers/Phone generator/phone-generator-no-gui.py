@@ -1,6 +1,4 @@
 """
-        Enigma: CodeWhisperer // Unveil the coder within. // Anno Domini MMXXIII.
-
 
 In Cisco IOS XE router, which working as SIP gateway or similar.
 This script creates SIP devices with extensions from CSV file
