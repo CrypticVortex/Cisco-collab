@@ -1,7 +1,6 @@
 """
 This script can be used to make serial connection to router and import basic config from file.
 
-  
     """
 import serial
 import serial.tools.list_ports
